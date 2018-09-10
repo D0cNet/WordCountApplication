@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  wordcountapplication:
+    image: ${DOCKER_REGISTRY}wordcountapplication
+    build:
+      context: .
+      dockerfile: WordCountApplication\Dockerfile
