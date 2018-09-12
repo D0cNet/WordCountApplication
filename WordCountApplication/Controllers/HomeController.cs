@@ -42,15 +42,8 @@ namespace WordCountApplication.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					var man = _wordSvc.SetUrl(param.url);
-					var images = man.GetImages();
-					var wordCount = man.GetWordCount();
-					var recurringWords = man.GetTopRecurringWords();
-
-					param.ImageCarouselItems = images;
-					param.WordCount = wordCount;
-					param.TopTenRecurringWords = recurringWords.ToList();
-
+					MainBodyModel mainbodyModel = GetBody(param.url);
+					param.mainBody = mainbodyModel;
 					return View(param);
 				}
 				else
@@ -61,12 +54,50 @@ namespace WordCountApplication.Controllers
 			catch (Exception ex)
 			{
 				_logger.LogError(ex.Message);
-				return BadRequest(ex.Message);
+				ModelState.AddModelError(string.Empty, ex.Message);
+				return View();
+			
 			
 			}
 		}
 
 		
 
-    }
+		/// <summary>
+		/// Ajax Action to set Partial page MainBody
+		/// </summary>
+		/// <param name="url"></param>
+		/// <returns></returns>
+		[HttpPost]
+		public IActionResult MainBody([FromForm] string url)
+		{
+			if (!String.IsNullOrEmpty(url))
+			{
+				MainBodyModel mainbodyModel = GetBody(url);
+				
+				return PartialView(mainbodyModel);
+			}
+			else
+			{
+				return new JsonResult("");
+			}
+		}
+		#region private functions
+		private MainBodyModel GetBody(string url)
+		{
+			var man = _wordSvc.SetUrl(url);
+			var images = man.GetImages();
+			var wordCount = man.GetWordCount();
+			var recurringWords = man.GetTopRecurringWords();
+			var mainbodyModel = new MainBodyModel()
+			{
+				ImageCarouselItems = images,
+				WordCount = wordCount,
+				TopTenRecurringWords = recurringWords.ToList()
+			};
+			return mainbodyModel;
+		}
+		#endregion
+
+	}
 }

@@ -23,9 +23,10 @@ namespace Services
 			return this;
 		}
 		
+		
 		public List<string> GetImages()
 		{
-			//throw new NotImplementedException();
+			
 			var imageTags = _manager.ParseImagesFromTags();
 			return imageTags.ToList();
 		}

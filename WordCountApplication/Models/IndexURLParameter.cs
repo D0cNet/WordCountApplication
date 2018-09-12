@@ -12,10 +12,6 @@ namespace WordCountApplication.Models
 		[DataType(DataType.Url)]
 		public string url { get; set; }
 
-		public List<string> ImageCarouselItems { get; set; }
-
-		public int WordCount { get; set; }
-
-		public List<KeyValuePair<string, int>> TopTenRecurringWords { set; get; }
+		public MainBodyModel mainBody { get; set; }
 	}
 }

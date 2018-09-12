@@ -33,10 +33,7 @@ namespace Utilities
 			return this;
 		}
 
-		/// <summary>
-		/// Utility method to extract all text from a default set of tags(paragraph,span,H1,H2,H3,H4 )
-		/// </summary>
-		/// <returns>Enumberable collection of words</returns>
+		
 		public IEnumerable<string> ParseTextFromTags()
 		{
 			IEnumerable<string> text = null;
@@ -54,10 +51,7 @@ namespace Utilities
 			return text;
 		}
 
-		/// <summary>
-		/// Utility method to extract all image tags
-		/// </summary>
-		/// <returns>Enumberable collection of image tags</returns>
+	
 		public IEnumerable<string> ParseImagesFromTags()
 		{
 			IEnumerable<string> imageHtml = null;
@@ -70,11 +64,7 @@ namespace Utilities
 			return imageHtml;
 		}
 
-		/// <summary>
-		/// Validate URL
-		/// </summary>
-		/// <param name="url"></param>
-		/// <returns>True/False - Valid URL </returns>
+		
 		public bool ValidateUrl(string url)
 		{
 			bool result = Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
@@ -95,6 +85,7 @@ namespace Utilities
 				var config = Configuration.Default.WithDefaultLoader();
 				
 				var document = await BrowsingContext.New(config).OpenAsync(url);
+				if (String.IsNullOrEmpty(document.Body.InnerHtml )) throw new Exception("No Data");
 				return document;
 			}
 			else
@@ -104,11 +95,7 @@ namespace Utilities
 			
 			
 		}
-		/// <summary>
-		/// Borrowed from https://stackoverflow.com/questions/16725848/how-to-split-text-into-words
-		/// </summary>
-		/// <param name="text"></param>
-		/// <returns>IEnumerable of words</returns>
+		
 		public IEnumerable<string> TextToWords(string text)
 		{
 			if(String.IsNullOrEmpty(text)) throw new ArgumentNullException("text");
@@ -120,12 +107,7 @@ namespace Utilities
 			return words;
 		}
 
-		/// <summary>
-		/// Overload that accepts an enumerable of strings
-		/// which is flattened to produce a string
-		/// </summary>
-		/// <param name="text"></param>
-		/// <returns>IEnumerable of string </returns>
+		
 		public IEnumerable<string> TextToWords(IEnumerable<string> text)
 		{
 			if (text==null) throw new ArgumentNullException("text");

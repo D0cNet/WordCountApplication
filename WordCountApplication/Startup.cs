@@ -24,8 +24,11 @@ namespace WordCountApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+			//Initialize Services and Utilities through DI
 			services.AddTransient<IWordCounterServices, WordCounterServices>();
 			services.AddTransient<IHTMLParserManager, HTMLParserManager>();
+			services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+
 			services.AddMvc();
         }
 
