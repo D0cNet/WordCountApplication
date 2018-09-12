@@ -43,7 +43,7 @@ namespace Utilities
 			if (_document != null)
 			{
 				//Get all text from designated tags
-				text = _document.QuerySelectorAll("p,span,h1,h2,h3,h4").Select(d => d.TextContent);
+				text = _document.QuerySelectorAll("p,span,h1,h2,h3,h4,title").Select(d => d.TextContent);
 
 
 			}
